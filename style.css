@@ -3,9 +3,9 @@
 
 
 body{
-    background-color: #DFE0DB;
+    /*background-color: #DFE0DB;*/
     font-family: Georgia,Utopia,Times,'Times Roman','Times New Roman',Palatino,'Palatino Linotype',serif !important;
-    color: #4D4D4D;
+    /*color: #4D4D4D;*/
 }
 
 h1{
@@ -18,7 +18,7 @@ h1{
     
 }
 #site-header{
-    width: 1000px;
+    /*width: 1000px;*/
     margin:0px auto;
 
 }
@@ -32,15 +32,15 @@ label small{
 }
 
 #content-outer{
-    background: transparent url(http://yccf.sustainability.yale.edu//static/images/content-bg-repeat.jpg) repeat-y scroll center top;
+    /*background: transparent url(http://yccf.sustainability.yale.edu//static/images/content-bg-repeat.jpg) repeat-y scroll center top;
     
     margin:0px auto;
-    width: 1000px;
+    width: 1000px;*/
 }
 #content-shadow{
 
-    background: transparent url(http://yccf.sustainability.yale.edu//static/images/content-bg-top.jpg) no-repeat scroll center top;
-    padding: 0px 18px 0px 19px;
+    /*background: transparent url(http://yccf.sustainability.yale.edu//static/images/content-bg-top.jpg) no-repeat scroll center top;
+    padding: 0px 18px 0px 19px;*/
 
 
 }
@@ -48,7 +48,7 @@ label small{
     
     padding-right: 20px;
     padding-left: 20px;
-    background: transparent url(http://yccf.sustainability.yale.edu//static/images/interior-stripe.gif) repeat-y scroll 940px 0%;
+    /*background: transparent url(http://yccf.sustainability.yale.edu//static/images/interior-stripe.gif) repeat-y scroll 940px 0%;*/
     margin-bottom: 40px;
 
 }
@@ -97,7 +97,9 @@ label small{
 
 
 .bg-img-welcome{
-    background: url(http://yccf.sustainability.yale.edu//static/background/welcome.jpg);
+    background: url(images/volcano.JPG);
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .bg-img-travel{
