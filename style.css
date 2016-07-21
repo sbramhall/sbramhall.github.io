@@ -1,0 +1,529 @@
+
+
+
+
+body{
+    background-color: #DFE0DB;
+    font-family: Georgia,Utopia,Times,'Times Roman','Times New Roman',Palatino,'Palatino Linotype',serif !important;
+    color: #4D4D4D;
+}
+
+h1{
+    font-size: 1.7em;
+    font-family: Verdana, Geneva, Kalimati, sans-serif;
+    font-size: 24px;
+    padding-top: 10px;
+    color: white;
+    background-color: #0e6998;
+    
+}
+#site-header{
+    width: 1000px;
+    margin:0px auto;
+
+}
+#yale-logo{
+    margin-left: 18px;
+
+}
+
+label small{
+    margin-left: 5px;
+}
+
+#content-outer{
+    background: transparent url(http://yccf.sustainability.yale.edu//static/images/content-bg-repeat.jpg) repeat-y scroll center top;
+    
+    margin:0px auto;
+    width: 1000px;
+}
+#content-shadow{
+
+    background: transparent url(http://yccf.sustainability.yale.edu//static/images/content-bg-top.jpg) no-repeat scroll center top;
+    padding: 0px 18px 0px 19px;
+
+
+}
+#content{
+    
+    padding-right: 20px;
+    padding-left: 20px;
+    background: transparent url(http://yccf.sustainability.yale.edu//static/images/interior-stripe.gif) repeat-y scroll 940px 0%;
+    margin-bottom: 40px;
+
+}
+
+#yellow-thingy{
+    margin-left: 20px;
+  margin-top: 25px;
+  border-top: #e7a200 4px solid;
+  background: #4a4949;
+  height: 21px;
+  width: 180px;
+    float: left;
+}
+#page-title a{
+    text-decoration: none;
+}
+
+#another-yellow-thingy{
+  margin-top: 20px;
+  border-top: #e7a200 4px solid;
+  background: white;
+  height: 26px;
+  width: 73px;
+    float: left;
+}
+
+#page-header{
+    height: 50px;
+    
+}
+
+#page-header .page-title{
+    background-color: #0e6998;
+    height: 30px;
+    margin-left: 200px;
+    width: 743px;
+    padding-left: 20px;
+    height: 100%;
+}
+
+#page-header-background{
+    height: 254px;
+    
+
+}
+
+
+.bg-img-welcome{
+    background: url(http://yccf.sustainability.yale.edu//static/background/welcome.jpg);
+}
+
+.bg-img-travel{
+    background: url(http://yccf.sustainability.yale.edu//static/background/travel.jpg);
+}
+.bg-img-event-travel{
+    background: url(http://yccf.sustainability.yale.edu//static/background/event-travel.jpg);
+}
+.bg-img-commute{
+    background: url(http://yccf.sustainability.yale.edu//static/background/commute.jpg);
+}
+.bg-img-buildings{
+    background: url(http://yccf.sustainability.yale.edu//static/background/buildings.jpg);
+}
+.bg-img-waste{
+    background: url(http://yccf.sustainability.yale.edu//static/background/waste.jpg);
+}
+.bg-img-overview{
+    background: url(http://yccf.sustainability.yale.edu//static/background/overview.jpg);
+}
+
+
+
+
+
+#page-title-spacer{
+    width:100%;
+    height: 219px;
+
+
+}
+
+#page-title-container{
+    background-color: #075480;
+    height: 20px;
+    margin-left: 20px;
+    padding-top: 7px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    width: 820px;
+    float: left;
+}
+
+#page-title-container a{
+    float: right;
+    margin-top: 8px;
+    text-decoration: none;
+    color: white;
+    margin-right: 22px;
+    font-size: 0.8em;
+}
+
+#progress-bar{
+    
+    background: #0e6998;
+    margin-left: 20px;
+}
+
+#page-content{
+    background: white;
+}
+
+h2{
+    background-color: #075480;
+    color: white;
+    font-family: Verdana, Geneva, Kalimati, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    margin:0em 0px;
+    float: left;
+    
+    
+}
+
+
+#page-step{
+    background-color:  #568FBA;
+    width: 800px;
+    height: 20px;
+    margin-left: 163px;
+}
+#page-content{
+    min-height: 400px
+}
+div#page-footer #footer-inner{
+    background: #106A9C url(http://yccf.sustainability.yale.edu//static/images/footer-bg.gif) repeat-x scroll left top;
+    height: 200px;
+    padding-top: 100px;
+    position: relative;
+    clear: both;
+    color: white;
+    font-family: Verdana, Geneva, Kalimati, sans-serif;
+}
+
+#page-footer a{
+    color: white;
+    text-decoration: none;
+}
+
+#footer-message {
+float: right;
+width: 500px;
+padding-top: 20px;
+font-size: 11px;
+line-height: 15px;
+color: white;
+}
+
+div#footer div, div#footer p, div#footer li {
+font-family: Verdana, Geneva, Kalimati, sans-serif;
+}
+
+#footer-center {
+float: left;
+border-right: solid #89B5D0 1px;
+width: 205px;
+height: 95px;
+}
+
+#footer-rigth {
+float: left;
+width: 260px;
+padding-left: 16px;
+height: 75px;
+}
+
+#block-footer-menu {
+float: left;
+width: 418px;
+height: 95px;
+padding-top: 0px;
+margin-top: 20px;
+background: transparent url(http://yccf.sustainability.yale.edu//static/images/yale-logo-2.gif) no-repeat scroll 20px bottom;
+border-right: solid #89B5D0 1px;
+}
+
+
+#block-footer-menu ul {
+padding: 0;
+margin: 0;
+padding-left: 17px;
+padding-bottom: 5px;
+}
+
+ul.menu, div.menu {
+list-style: none;
+border: none;
+text-align: left;
+    font-size: 13px;
+}
+
+ul, menu, dir {
+display: block;
+list-style-type: disc;
+-webkit-margin-before: 1em;
+-webkit-margin-after: 1em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 40px;
+}
+
+#block-footer-menu li {
+list-style-type: none;
+display: inline;
+font-size: 1em;
+padding: 18px 22px;
+}
+#block-footer-menu div.first.li{
+    padding-left: 22px;
+}
+
+div.menu{
+    float: left;
+}
+#block-footer-menu div.li{
+    font-size: 0.70em;
+    float: left;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 3px;
+    padding-left: 13px;
+}
+
+#block-footer-menu li.first {
+padding-left: 5px;
+}
+
+.section{
+    background: white;
+
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    
+    margin-top: 0px;
+}
+
+.section-stripe{
+    background: #4A4949;/*url(images/main-content-bg.gif) repeat-x scroll left top;*/
+    height: 10px;
+    
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.section:focus{
+    background: blue;
+}
+
+.section input, .section select, .section label{
+    font-size: 1.1em;
+}
+
+.section td input, .section td select, .section td label{
+    font-size: 0.8em;
+}
+
+.focus_column{
+    background: blue;
+    background: #ccddcc;
+}
+
+.co2e{
+
+}
+
+.over{
+    background: #eeeeee;
+}
+table {
+    border-spacing: 0px;
+}
+
+th{
+    padding-right: 10px;
+    /*border-bottom: 2px solid black;*/
+    font-size: 0.8em;
+    
+}
+
+th small{
+    font-size: 0.6em;
+}
+
+tr.sub-row td{
+    padding-top: 0px;
+    
+}
+td{
+    padding-top: 6px;
+    padding-bottom: 0px;
+    border-bottom: 5px solid white;
+    vertical-align: bottom;
+}
+
+td select{
+    margin-bottom: 4px;
+}
+
+td input[type=checkbox]{
+    margin-bottom: 5px;
+}
+
+.error{
+    border-bottom: 5px solid red;
+}
+
+div.unit{
+    font-size: 0.6em;
+    
+}
+
+.quantity-type{
+    font-size: 0.6em;
+}
+
+img.remove-item{
+    margin-bottom: 5px;
+    
+}
+td img{
+    position: relative;
+    top: 3px;
+}
+
+.even_row{
+    background: #cfdcdd;
+}
+
+.odd_row{
+    background: #dcddcf;
+}
+
+
+p input {
+    margin-top: 12px;
+}
+
+p img{
+    
+    margin-left: 9px;
+}
+
+
+.label-spacer{
+    width: 70px;
+    float: left;
+    padding-top: 4px;
+}
+
+.carbon-impact{
+    font-weight: bolder;
+    font-size: 1.8;
+    width: 60%;
+    float: left;
+}
+
+.donation{
+    font-weight: bolder;
+    font-size: 1.8;
+}
+
+.impact-container{
+    height: 50px;
+    width: 100%;
+}
+
+.impact-right{
+    
+    float: right;
+}
+
+table{
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.inner-form{
+    float: left;
+}
+
+
+tr label{
+    font-size: 0.5em;
+    color: black;
+}
+th {
+    text-align: left;
+}
+
+
+
+tr div{
+    /*float: left;*/
+}
+
+.itenary{
+    padding: 5px;
+    margin-top: 2px;
+}
+
+.travellers{
+    width: 40px;
+}
+
+
+
+
+.tooltip{
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    background: #5f9410;
+    max-width: 400px;
+    color: white;
+    font-size: 0.7em;
+    padding: 8px;
+    
+    line-height: 1.35em;
+
+}
+
+
+.distance-error{
+    color: red;
+    font-size: 0.7em;
+}
+
+#main-links ul{
+}
+#main-links li{
+
+    list-style: none;
+    float: left;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 101px;
+
+}
+
+#main-links img{
+    
+}
+
+#img-list{
+    margin-top: 20px;
+    width: 100%;
+    height: 150px;
+}
+
+img{
+    border: 0px;
+}
+
+.doc_days img{
+    margin-left: 9px
+}
+.doc_people img{
+    margin-left: 9px
+}
+
+#spinner{
+
+    padding-left: 7px;
+}

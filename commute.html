@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/jquery.class.js"></script>
+    <script type="text/javascript" src="static/jquery.simpletip.js"></script>
+    <script type="text/javascript" src=/static/json2.js"></script>
+    <script type="text/javascript" src="static/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Yale Community Carbon Calculator</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
+
+    <script type="text/javascript" src="/static/travel.js"></script>
+    <script type="text/javascript">
+        var trip;
+        var subtypes = {"taxi": [["Choose type", "null"], ["Standard Taxi", "Standard Taxi"], ["Green Taxi (CNG)", "Green Taxi (CNG)"]], "car": [["Choose type", "null"], ["Passenger Car", "Passenger Car"], ["Pickup/Van/SUV", "Pickup/Van/SUV"], ["Motorcycle", "Motorcycle"], ["Delivery Truck", "Delivery Truck"]], "adv_car": [["Choose type", "null"], ["Passenger Car", "Passenger Car"], ["Pickup/Van/SUV", "Pickup/Van/SUV"], ["Bus", "Bus"], ["Taxi", "Taxi"]], "rail": [["Choose type", "null"], ["Intercity Rail", "Intercity Rail"], ["Commuter Rail", "Commuter Rail"], ["Transit Rail", "Transit Rail"]], "bus": [["Choose type", "null"], ["CT Transit", "CT Transit"], ["Yale Shuttle", "Yale Shuttle"], ["Other bus", "Other bus"]]};
+        var car_kinds = {"Pickup/Van/SUV": [["Choose model", "null"], ["US average", "US average"], ["Hybrid", "hybrid"], ["I don't know", "idk"]], "Passenger Car": [["Choose model", "null"], ["US average", "US average"], ["Domestic", "domestic"], ["Imported", "imported"], ["Hybrid", "hybrid"], ["I don't know", "idk"]]};
+        var hybrid_years = {"Passenger Car": [["Choose year", "null"], [1999, 1999], [2000, 2000], [2001, 2001], [2002, 2002], [2003, 2003], [2004, 2004], [2005, 2005], [2006, 2006], [2007, 2007], [2008, 2008], [2009, 2009], [2010, 2010], [2011, 2011]], "Pickup/Van/SUV": [["Choose year", "null"], [2004, 2004], [2005, 2005], [2006, 2006], [2007, 2007], [2008, 2008], [2009, 2009], [2010, 2010], [2011, 2011]]};
+        var years = [["Choose year", "null"], [1990, 1990], [1991, 1991], [1992, 1992], [1993, 1993], [1994, 1994], [1995, 1995], [1996, 1996], [1997, 1997], [1998, 1998], [1999, 1999], [2000, 2000], [2001, 2001], [2002, 2002], [2003, 2003], [2004, 2004], [2005, 2005], [2006, 2006], [2007, 2007], [2008, 2008], [2009, 2009], [2010, 2010], [2011, 2011]]
+
+        var calculate_travel = true;
+        $(document).ready(function(event){
+            trip = new Trip(document.getElementById('map_canvas'),$('#waypoints'),
+                    subtypes, car_kinds, hybrid_years, years);
+            trip.addLeg();
+
+            $('#submit-emission').click(function(){
+                $('input').blur();
+                for(var i =0; i < trip.legs.length; i++){
+                    var leg = trip.legs[i];
+                    if(!leg.validateTransportType()){
+                        //console.log("HMMMM mmm");
+                        var b = $($('.travel-mode', leg.row).parents()[1]);
+                        b.addClass('error');
+                    }
+                }
+                window.setTimeout(function(){
+                    $('#hidden-form').submit();
+                },10);
+                return false;
+            });
+
+            $('#hidden-form').submit(function(){
+                if(!calculate_travel){
+                    return true;
+                }
+
+
+                if($('.error').length > 0){
+                    alert('Something is wrong on your form. Please correct the values underlined in red');
+                    return false;
+                }
+                
+    $(this).append("<input type='hidden' name='commute' value='"+$('#number_of_commutes').val()+"'/>");
+
+
+
+                for(var i=0; i < trip.legs.length; i++){
+                    var data = trip.legs[i].json();
+                    $(this).append("<input type='hidden' name='itinerary_"+i+"' value='"+data+"'/>");
+
+                }
+
+                //console.log($(this).serialize());
+                return true;
+            });
+            
+
+    $('#number_of_commutes').keyup(function(event){
+        trip.setMultiplier($(this).val());
+    });
+    $('#number_of_commutes').keydown(function(event){
+        blockNonIntegers(event, $(this).val(), 3);
+    });
+    validateInteger($('#number_of_commutes'));
+
+
+            $('.carbon-impact').kgCO2eFormat();
+        });
+
+
+        
+    </script>
+       <style>
+           #map_canvas{
+               height: 350px;
+               padding: 20px;
+               background: black;
+           }
+       </style>
+
+</head>
+<body>
+    <div id='site-header'>
+            <img id='yale-logo' src="http://yccf.sustainability.yale.edu/static/images/yale-oos-logo.png"/>
+        
+    </div>
+    <div id="content-outer">
+
+
+        <div id="content-shadow">
+            <div id='page-header'>
+                    <div id="yellow-thingy"></div>
+                    <div class='page-title'>
+                        <a style='text-decoration:none' href='/'><h1>Yale Community Carbon Fund Calculator</h1></a>
+                    </div>
+                </div>
+            <div id="content">
+
+                <div id='page-header-background' class='bg-img-commute' >
+
+                    <div id='page-title'>
+                        <div id='page-title-spacer'></div>
+                        <div id='page-title-container'>
+                            <h2>
+                                Commute
+                            </h2>
+
+                            <a href='/' id='home-link'>Back to Home</a>
+
+                        
+
+                        </div>
+                    <div id="another-yellow-thingy"></div>
+
+                    </div>
+                </div>
+
+
+
+                <div id='page-content'>
+
+                    
+
+    
+<div class='section'>
+        <p>Whether you are coming from as close as North Haven or as far as Stamford or Hartford,
+            your commuting decisions have a carbon impact.
+            To calculate the carbon footprint associated with your
+            commuting method fill in your origin, destination, travel mode,
+            number of persons and number of commuting days below.
+            Add as many itineraries as needed to calculate your impact.</p>
+
+    </div>
+
+    <div class='section optional_section'>
+    <div id="map_canvas"></div>
+
+    <table id='waypoints'>
+        <!-- total inner width: 873 -->
+        <colgroup align="left" width='17%'></colgroup>
+        <colgroup align="left" width='17%'></colgroup>
+        <colgroup align="left" width='5%'></colgroup>
+        <colgroup width='33%'></colgroup>
+        <colgroup align="left" width='7%'></colgroup>
+
+
+        <colgroup width='8%'></colgroup>
+        <colgroup width='8%'></colgroup>
+        <colgroup width='5%'></colgroup>
+        <tr align='left'>
+            <th >Origin</th>
+            <th >Destination</th>
+            <th ><small>Round Trip</small></th>
+            <th>Transport type</th>
+            <th ></th>
+            <th >Distance</th>
+            <th >Emissions</th>
+            <th><small>remove</small></th>
+        </tr>
+        
+
+    </table>
+        
+
+
+        <input type='button' value='Add Itinerary' onclick='trip.addLeg();'/>
+
+
+
+
+
+    </div>
+
+    
+<div class='section'>
+    <p><label for='number_of_commutes'>How many commuting days would you like to calculate? (Number of Yale workdays in a Year: 244)</label></p>
+        <div class='error-container' style='width:60px'><input id='number_of_commutes' style='width:54px' name='people'></div>
+</div>
+
+
+    <div class='section'>
+        <div class='impact-container'>
+    <div class='carbon-impact'>
+        <span class='co2e'>
+        Your carbon impact: <span id='total_carbon' class='co2e-value'> - </span>
+        <span class='mtco2e'>metric tons co2e</span>
+        </span>
+        <img src='/static/images/ajax-loader.gif' id='spinner' style='display: none;'/>
+    </div>
+    <div class='impact-right'>
+
+
+    <form name="input" id='hidden-form' action="/overview" method="post">
+        
+        <input type='submit' value='Proceed to overview' id='submit-emission'/>
+    </form>
+    </div>
+</div>
+    </div>
+
+
+
+
+<table>
+<tr class="travel-template list-item" style="display:none;">
+    <td class='col0 doc_origin'>
+    <input type="textbox" class="origin" name="leg_origin" style='width:78%'>
+
+    </td>
+
+    <td class='col1 doc_destination'>
+    <input type="textbox" class="destination" name="leg_destination" style='width:78%'>
+    </td>
+
+    <td class='col3, doc_return_trip'>
+    <input type="checkbox" class="return_trip" name="leg_return_trip">
+    </td>
+    <td class='col4'>
+        <div class='doc_transport-type doc_car doc_air doc_rail doc_bus doc_charter doc_taxi inner-form'>
+            <div class="inner-form">
+            <select class="travel-mode">
+                <option value="Car">Road</option>
+                <option value="Air">Air</option>
+                <option value="Rail">Rail</option>
+                <option value="Bus">Bus</option>
+                <option value="Charter Bus">Charter Bus</option>
+                <option value="Taxi">Taxi</option>
+
+            </select>
+
+            <select class="subtype"></select>
+            </div>
+
+
+        </div>
+
+
+
+    
+    </td>
+
+    <td class='col4 doc_persons'>
+        <div class='quantity-type'>vehicles</div>
+        <input type="textbox" class="travellers" name="leg_travellers" value="1" size=5>
+
+    </td>
+
+    <td class='col5 doc_distance'>
+    <span class='distance'>
+            <span class='distance-value'> - </span> <div class='miles unit'>miles</div>
+    </span>
+    </td>
+
+    <td class='col6 doc_impact'>
+    <span class='carbon-impact'>
+        <span class='co2e'>
+            <span class='co2e-value'> - </span> <div class='kgco2e unit'>kg co2e</div>
+        </span>
+    </span>
+    </td>
+    <td class='col6' ><img class='remove-item' src='static/twotone/red/x.gif'/>
+    </td>
+
+</tr>
+<tr class='vehicle-template sub-row' style="display:none;">
+<td></td>
+<td></td>
+<td></td>
+    <td colspan=2>
+    <div class="advanced-car">
+
+        <div class='doc_car-model car-model'>
+            <div class='label-spacer'><label>Car Model:</label></div>
+            <select class="car-kind">
+                <option value="null"> - </option>
+            </select>
+            <select class="car-year">
+                <option value="null"> - </option>
+            </select>
+        </div>
+        <div class='doc_fuel-type fuel-type'>
+            <div class='label-spacer'><label>Fuel:</label></div>
+            <select class="fuel-type-input">
+               
+                <option value="default">Gasoline (default)</option>
+                
+                <option value="E01">Gasoline (E01)</option>
+                
+                <option value="E02">Gasoline (E02)</option>
+                
+                <option value="E03">Gasoline (E03)</option>
+                
+                <option value="E04">Gasoline (E04)</option>
+                
+                <option value="E05">Gasoline (E05)</option>
+                
+                <option value="E06">Gasoline (E06)</option>
+                
+                <option value="E07">Gasoline (E07)</option>
+                
+                <option value="E08">Gasoline (E08)</option>
+                
+                <option value="E09">Gasoline (E09)</option>
+                
+                <option value="E10">Gasoline (E10)</option>
+                
+                <option value="E85">Ethanol (E85)</option>
+                
+            </select>
+        </div>
+    </div>
+    </td>
+<td colspan='2' class='distance-error'></td>
+
+<td></td>
+</tr>
+
+
+</table>
+
+
+                </div>
+            </div>
+
+            <div id='page-footer'>
+                <div id="footer-inner" class="region region-footer">
+
+                  <div id="footer-message">
+                      <div id="footer-center">
+                        Yale Office of Sustainability <br>
+                        70 Whitney Avenue <br>
+                        New Haven, CT 06511 <br>
+                        (203) 436-3571 <br>
+                        <a title="Contact Yale Office of Sustainability" href="mailto:sustainability@yale.edu">sustainability@yale.edu</a>
+                     </div>
+                  <div id="footer-rigth">
+                      ©2010-11 Yale University. All Rights Reserved. <br>
+                        Created by <a href="http://www.except.nl/" title="Except" target="_blank">Except - Integrated Sustainability</a> &amp;
+                                   <a href="http://www.uniqueidentifier.net" title="Rudstrom Design" target="_blank">Rudstrom Design</a>
+
+                  </div>
+              </div>
+
+                <div id="block-footer-menu" class="block block-menu region-odd odd region-count-1 count-13">
+                    <div class="block-inner">
+                        <div class="content">
+                            <ul class="menu">
+                                <li class="leaf first"><a href="http://sustainability.yale.edu/contact-us" title="">Contact Us</a></li>
+                                <li class="leaf"><a href="http://sustainability.yale.edu/sitemap" title="">Sitemap</a></li>
+                                <li class="leaf"><a href="http://sustainability.yale.edu/terms-conditions" title="">Terms</a></li>
+                                <li class="leaf last"><a href="http://sustainability.yale.edu/privacy" title="">Privacy</a></li>
+                            </ul>
+                            <div class="menu">
+                              <div class="li leaf first"><a href="http://sustainability.yale.edu/carbonfund" title="">Yale Community Carbon Fund</a></div>
+                              <div class="li leaf"><a href="http://cbey.research.yale.edu/" title="">Yale Center for Business and the Environment</a></div>
+                            </div>
+                            <div style="clear:both;font-size:1px;height:1px;">&nbsp;</div>
+                        </div>
+                    </div>
+                </div> <!-- /block-inner, /block -->
+              </div>
+            </div>
+        </div>
+    </div>
+        <div id='doc-source' style='display:none;'>
+       
+           <div class='src_doc_air'>Airplanes use more fuel on take-off and landing than while cruising.  Carbon impacts associated with air travel can be more accurately estimated by entering each leg of non-direct flights individually instead of only the origin and destination.  To do so, enter each leg of the flight as a separate itinerary.</div>
+       
+           <div class='src_doc_rail'>Intercity Rail (e.g. Amtrak)
+Commuter Rail (e.g. MetroNorth)
+Transit Rail (subway systems)</div>
+       
+           <div class='src_doc_bus'>All Yale shuttle buses run on biodiesel B20, a mixture of 20% biodiesel and 80% conventional diesel.  B20 cuts CO2 emissions 20% over conventional diesel.
+
+All CTTransit buses currently operating in New Haven run on biodiesel B5, a mixture of 5% biodiesel and 95% conventional diesel.  B5 cuts CO2 emissions 5% over conventional diesel.
+
+The model (conservatively) assumes all other buses run on 100% conventional diesel.</div>
+       
+           <div class='src_doc_charter'>The model (conservatively) assumes charter buses run on 100% conventional diesel.</div>
+       
+           <div class='src_doc_taxi'>&quot;Standard Taxi&quot; is based on a 2006 Ford Crown Victoria using gasoline with 10% ethanol (the Connecticut standard mixture).  This is a typical cab.
+
+&quot;Green Taxi&quot; is based on a 2011 VPG Autos MV-1 compressed natural gas vehicle.  These (and other) new alternative fuel cabs are currently being rolled out in New Haven.  The MV-1 will be the most common.  CNG vehicles release fewer greenhouse gas emissions than conventional gas and diesel vehicles.
+
+Did you know that if a taxi service has a &quot;green fleet&quot; you can request one of these vehicles when calling dispatch for a pickup?  Remember to ask for a green taxi next time you call in.</div>
+       
+           <div class='src_doc_origin'>Enter the origin of this leg of your travel here.  Google maps will automatically locate your origin on the map above.</div>
+       
+           <div class='src_doc_destination'>Enter the destination of this leg of your travel here.  Google maps will automatically locate your destination on the map above.</div>
+       
+           <div class='src_doc_fuel-type'>Many states use ethanol as a fuel additive to achieve renewable fuel portfolio standards and mitigate air quality impacts.  Some states (FL, HI, IA, KS, LA, MN, MO, MT, OR, WA) even mandate the use of E10.
+
+Many New England states use fuel additives to help meet air quality criteria.  Since MTBE was found to be toxic, ethanol is now the favorable oxygenate.  Gasoline in CT is typically a 10% ethanol blend (E10).</div>
+       
+    </div>
+
+</body>
+</html>
