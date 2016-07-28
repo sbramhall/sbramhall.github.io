@@ -97,7 +97,7 @@ label small{
 
 
 .bg-img-welcome{
-    background: url(images/volcano.JPG);
+    background: url(static/images/volcano.JPG);
     background-repeat: no-repeat;
     background-size: contain;
 }
