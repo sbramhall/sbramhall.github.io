@@ -49,7 +49,7 @@ label small{
     padding-right: 20px;
     padding-left: 20px;
     /*background: transparent url(http://yccf.sustainability.yale.edu//static/images/interior-stripe.gif) repeat-y scroll 940px 0%;*/
-    margin-bottom: 40px;
+    /*margin-bottom: 40px;*/
 
 }
 
@@ -185,9 +185,11 @@ h2{
     min-height: 400px
 }
 div#page-footer #footer-inner{
-    background: #106A9C url(http://yccf.sustainability.yale.edu//static/images/footer-bg.gif) repeat-x scroll left top;
-    height: 200px;
-    padding-top: 100px;
+    background: #106A9C url(static/images/foto_strip_various_5_29_12_via_zamzar.14965754_std.jpg);
+    /*background-repeat: no-repeat;*/
+    background-size: contain;;
+    height: 100px;
+    /*padding-top: 100px;*/
     position: relative;
     clear: both;
     color: white;
@@ -201,11 +203,11 @@ div#page-footer #footer-inner{
 
 #footer-message {
 float: right;
-width: 500px;
-padding-top: 20px;
-font-size: 11px;
+/*width: 500px;*/
+padding-top: 5px;
+/*font-size: 11px;*/
 line-height: 15px;
-color: white;
+color: black;
 }
 
 div#footer div, div#footer p, div#footer li {
@@ -219,14 +221,14 @@ width: 205px;
 height: 95px;
 }
 
-#footer-rigth {
+/*#footer-rigth {
 float: left;
 width: 260px;
 padding-left: 16px;
 height: 75px;
-}
+}*/
 
-#block-footer-menu {
+/*#block-footer-menu {
 float: left;
 width: 418px;
 height: 95px;
@@ -234,7 +236,7 @@ padding-top: 0px;
 margin-top: 20px;
 background: transparent url(http://yccf.sustainability.yale.edu//static/images/yale-logo-2.gif) no-repeat scroll 20px bottom;
 border-right: solid #89B5D0 1px;
-}
+}*/
 
 
 #block-footer-menu ul {
