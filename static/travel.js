@@ -78,7 +78,7 @@ var AirRoute = $.Class({
           strokeOpacity: 1.0,
           strokeWeight: 3,
           geodesic: true
-        }
+        };
         this.path = new google.maps.Polyline(geodesicOptions);
         this.path.setMap(this.leg.trip.map);
 
@@ -87,7 +87,7 @@ var AirRoute = $.Class({
         p.push(this.leg.destination.position);
 
 
-       this.distance = google.maps.geometry.spherical.computeLength(p)
+       this.distance = google.maps.geometry.spherical.computeLength(p);
        this.leg.updateDistance()
    },
 
@@ -191,11 +191,11 @@ var Leg = $.Class({
         if(this.transport_type == 'Car' || this.transport_type == 'Bus'
                 || this.transport_type == 'Taxi'
                 || this.transport_type == 'Charter Bus'){
-            //console.log('init road');
+            console.log('init road');
             this.route = new RoadRoute(this);
         }
         if(this.transport_type == 'Air'){
-            //console.log('init air');
+            console.log('init air');
             this.route = new AirRoute(this);
         }
     },
@@ -221,7 +221,7 @@ var Leg = $.Class({
     },
 
     set: function(key, val){
-        //console.log('set '+key+':'+val);
+        console.log('set '+key+':'+val);
         if(this[key] == val){
             return;
         }
@@ -239,9 +239,9 @@ var Leg = $.Class({
         if(key == 'return_trip'){
            $(this.distance_out).html(round(this.distance * (1+this.return_trip), 1));
         }
-        //console.log('co2e_mile: '+this.co2e_mile);
+        console.log('co2e_mile: '+this.co2e_mile);
         if(this.co2e_mile != null){
-            //console.log("KEY", key);
+            console.log("KEY", key);
             if(key == 'travellers' || key == 'distance' || key =='return_trip' || key=='co2e_mile' ||key=='num_buses'){
                 //console.log(this.co2e_mile + " T" + this.travellers +" D" + this.distance +" R"+this.return_trip);\
                 //if(this.transport_type == 'Charter Bus'){
@@ -254,19 +254,19 @@ var Leg = $.Class({
             }
         }
         var url = '/carbon/travel?';
-        //console.log("adv: "+this.advanced);
+        console.log("adv: "+this.advanced);
 
 
 
         if(this.advanced && this.transport_type == 'Car'){
-            //console.log("S"+this.subtype+"K"+this.car_kind+"Y"+this.car_year+"F"+this.fuel_type);
+            console.log("S"+this.subtype+"K"+this.car_kind+"Y"+this.car_year+"F"+this.fuel_type);
             if(this.subtype == null || this.car_kind == null || this.car_year == null || this.fuel_type == null){
 
 
-                //console.log("ISNULL");
+                console.log("ISNULL");
                 return;
             }
-            //console.log("S"+this.subtype+"K"+this.car_kind+"Y"+this.car_year+"F"+this.fuel_type);
+            console.log("S"+this.subtype+"K"+this.car_kind+"Y"+this.car_year+"F"+this.fuel_type);
             url = url + 'advanced=1&' +
                         '&car_type='+this.subtype +
                         '&car_kind='+this.car_kind +
@@ -276,7 +276,7 @@ var Leg = $.Class({
         } else {
 
             if(this.transport_type == 'Air'){
-                //console.log("HMMMM");
+                console.log("HMMMM");
 
                 if(this.distance >= 700){
                     this.subtype = 'Long Haul';
@@ -291,7 +291,7 @@ var Leg = $.Class({
             }
 
             if(this.subtype == null || this.transport_type == null){
-                //console.log("ISNULL");
+                console.log("ISNULL");
                 return;
             }
 
@@ -303,16 +303,18 @@ var Leg = $.Class({
                 url = url + '&radioactive_forcing=1';
             }
         }
-        //console.log(url);
+        console.log(url);
         var wst = this;
         $('#submit-emission').attr('disabled', 'disabled');
         $('#spinner').show();
-        $.getJSON(url, function(data){
-            //console.log("ppd"+data);
+/*        $.getJSON(url, function(data){
+            console.log("ppd"+data);
             wst.set('co2e_mile', data);
             $('#spinner').hide();
             $('#submit-emission').removeAttr('disabled');
-        });
+        });*/
+        var kgCO2 = calcCO2Emultiplier(wst);
+        wst.set('co2e_mile',kgCO2)
     },
 
 
@@ -335,7 +337,7 @@ var Leg = $.Class({
 
     setCarbon: function(value){
         this.co2e = Math.round(value * 1000) / 1000;
-        //console.log("co2e"+this.co2e);
+        console.log("co2e"+this.co2e);
         $(this.carbon_out).html(parseFloat(this.co2e).toFixed(0));
         this.trip.updateCarbon();
     },
@@ -374,13 +376,13 @@ var Leg = $.Class({
     setTransportTypeHelp: function(val){
       for(var i = 0; i < this.trip.transport_mode_docs.length; i++){
           var d = this.trip.transport_mode_docs[i];
-          //console.log(d+":"+val);
+          console.log(d+":"+val);
 
           if(val == d){
-              //console.log("show");
+              console.log("show");
               $('.img_'+d, this.row).show();
           } else {
-              //console.log("hide");
+              console.log("hide");
                 $('.img_'+d, this.row).hide();
           }
       }
@@ -410,7 +412,7 @@ var Trip = $.Class({
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           center: new google.maps.LatLng(41.3133431, -72.92826179999997),
           scrollwheel: false
-        }
+        };
         this.map = new google.maps.Map(map_canvas, myOptions);
         
         this.multiplier = 1;
@@ -510,7 +512,7 @@ var Trip = $.Class({
         $('.subtype', row).change(function(event){
 
             var val = $(this).val();
-            //console.log("subtypechanged "+val);
+            console.log("subtypechanged "+val);
             set_options($('.car-year', vehicle_row), [[' - ', 'null']]);
             if (val == 'Passenger Car' || val == 'Pickup/Van/SUV'){
                 $('div.car-model', vehicle_row).show();
@@ -573,7 +575,7 @@ var Trip = $.Class({
                $('.quantity-type', row).html('passengers');
            }
            if(val == 'Taxi'){
-               //console.log(trip.subtypes['taxi']);
+               console.log(trip.subtypes['taxi']);
                set_options(st, trip.subtypes['taxi']);
                st.show();
                $('div.advanced-car', vehicle_row).hide();
@@ -650,14 +652,14 @@ var Trip = $.Class({
         $('div.fuel-type', vehicle_row).hide();
 
 
-        this.transport_mode_docs = ['doc_car', 'doc_air', 'doc_rail', 'doc_bus', 'doc_charter', 'doc_taxi']
+        this.transport_mode_docs = ['doc_car', 'doc_air', 'doc_rail', 'doc_bus', 'doc_charter', 'doc_taxi'];
         var docelems = ["doc_mode", "doc_emission", "doc_origin","doc_destination",'doc_num-buses'];
         var docelems = docelems.concat(this.transport_mode_docs);
 
         for(var i = 0; i < docelems.length; i++){
             addHelp(docelems[i], $(row));
         }
-        docelems = ["doc_advanced-car", "doc_fuel-type", "doc_car-model"]
+        docelems = ["doc_advanced-car", "doc_fuel-type", "doc_car-model"];
         for(var i = 0; i < docelems.length; i++){
             addHelp(docelems[i], $(vehicle_row));
         }
@@ -680,7 +682,7 @@ var Trip = $.Class({
             //total_dist = total_dist + this.legs[i].distance;
             total_carb = total_carb + this.legs[i].co2e;
         }
-        //console.log("TOTCARB", total_carb);
+        console.log("TOTCARB", total_carb);
         //this.total_co2e = Math.round(total_carb * this.multiplier * 100) / 100;
         //if( isNaN( parseFloat( $(this).html() ) ) ) return;
         this.total_co2e = parseFloat(total_carb * this.multiplier / 1000).toFixed(2);
@@ -701,6 +703,24 @@ var Trip = $.Class({
         this.updateCarbon();
     }
 
+})
+    /* added function to calculate emission from distance */
+function calcCO2Emultiplier(leg) {
+    if(leg.transport_type == 'Air')
+    {
+        if (leg.distance <= 500)
+        {
+            kgCO2 = 0.24;
+        }
+        else
+        {
+            kgCO2 = 0.18;
+        }
+    return kgCO2;
+    }
 
-});
+    calculation = distance * kgCO2 * 2.7  / 1000;
+    console.log( calculation.toFixed(3) + " metric tons");
+}
+// need a function to calculate $ from tons
 

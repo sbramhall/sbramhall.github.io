@@ -7303,6 +7303,7 @@ if ( jQuery.support.ajax ) {
 					// Do send the request
 					// This may raise an exception which is actually
 					// handled in jQuery.ajax (so no try/catch here)
+					// this is the call to the server side function that I need to replace
 					xhr.send( ( s.hasContent && s.data ) || null );
 
 					// Listener

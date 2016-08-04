@@ -71,7 +71,7 @@ function addHelp(elem, root){
     if(src.length < 1){
         return;
     }
-    var img = $("<span><img src='/static/twotone/green/question-mark.gif'/ class='img_"+elem+"'/></span>");
+    var img = $("<span><img src='static/images/question-mark.gif'/ class='img_"+elem+"'/></span>");
     var elems = $("."+elem, root);
     elems.append(img);
 

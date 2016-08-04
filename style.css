@@ -318,7 +318,10 @@ padding-left: 5px;
 }
 
 .section td input, .section td select, .section td label{
-    font-size: 0.8em;
+    /*font-size: 0.8em;*/
+   -moz-appearance: none;
+    margin: 0;
+    border: 1px solid #bbb;
 }
 
 .focus_column{
