@@ -687,7 +687,7 @@ var Trip = $.Class({
         //if( isNaN( parseFloat( $(this).html() ) ) ) return;
         this.total_co2e = parseFloat(total_carb * this.multiplier / 1000).toFixed(2);
         $('#total_carbon').html(this.total_co2e);
-        
+        $('#donation').html('$' + (this.total_co2e * 25).toFixed(2));
     },
 
     setMultiplier: function(val){

@@ -169,32 +169,36 @@
 
     </div>
 
-    
 
-    
+
+
 
     <div class='section'>
         <div class='impact-container'>
-    <div class='carbon-impact'>
+            <div class='carbon-impact'>
+            <span class='co2e'>
+            Your carbon impact: <span id='total_carbon' class='co2e-value'> - </span>
+            <span class='mtco2e'>metric tons co2e</span>
+            </span>
+                <!--<img src='static/images/spinning.gif' id='spinner' style='display: none;'/>-->
+            </div>
+            <div class='carbon-impact'>
         <span class='co2e'>
-        Your carbon impact: <span id='total_carbon' class='co2e-value'> - </span>
-        <span class='mtco2e'>metric tons co2e</span>
+        Suggested donation amount: <span id='donation' class='co2e-value'>  </span>
+        <!--span class='mtco2e'>metric tons co2e</span>-->
         </span>
-        <!--<img src='static/images/spinning.gif' id='spinner' style='display: none;'/>-->
-    </div>
+                <!--<img src='static/images/spinning.gif' id='spinner' style='display: none;'/>-->
+            </div>
     <div class='impact-right'>
 
 
     <form name="input" id='hidden-form' action="/overview" method="post">
-        
+
         <input type='submit' value='Proceed to overview' id='submit-emission'/>
     </form>
     </div>
 </div>
     </div>
-
-
-
 
 <table>
 <tr class="travel-template list-item" style="display:none;">
